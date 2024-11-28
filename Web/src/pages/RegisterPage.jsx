@@ -1,11 +1,10 @@
 import Image from "/auth.png";
 import Logo from "/insta_logo.png";
-import GoogleIcon from "/google.png";
 import PlayStore from "/playstore.png";
 import Microsoft from "/microsoft.png";
 import { useNavigate } from "react-router-dom";
 
-const LoginPage = () => {
+const RegisterPage = () => {
     const navigate = useNavigate();
 
     return (
@@ -26,29 +25,17 @@ const LoginPage = () => {
                   
                   {/* Form */}
                   <form className="flex flex-col gap-5 w-full mb-5">
+                      <input type="text" className="bg-black border border-gray-600 text-white text-sm rounded-lg block w-full p-2.5" placeholder="Name" required />
                       <input type="email" className="bg-black border border-gray-600 text-white text-sm rounded-lg block w-full p-2.5" placeholder="Email" required />
                       <input type="password" className="bg-black border border-gray-600 text-white text-sm rounded-lg block w-full p-2.5" placeholder="Password" required />
-                      <button type="submit" className="text-white bg-blue-400 hover:bg-blue-800 font-medium rounded-lg w-full text-sm px-5 py-2.5 me-2 mb-2">Log in</button>
+                      <button type="submit" className="text-white bg-blue-400 hover:bg-blue-800 font-medium rounded-lg w-full text-sm px-5 py-2.5 me-2 mb-2">Register</button>
                   </form>
-  
-                  {/* Or */}
-                  <div className="flex items-center w-full mb-5">
-                      <div className="border-t border-white w-full"></div>
-                      <span className="mx-4 text-gray-300">OR</span>
-                      <div className="border-t border-white w-full"></div>
-                  </div>
-  
-                  {/* Login Google */}
-                  <div className="flex justify-center items-center p-4 gap-5">
-                      <img src={GoogleIcon} alt="GoogleIcon" className="max-h-6" />
-                      <p className="text-blue-400">Log in with Google</p>
-                  </div>
               </div>
   
               {/* Change Form */}
               <div className="flex gap-4 justify-center items-center p-5 border border-gray-500 rounded-lg mb-5 max-w-[450px] w-full">
-                  <p>Don&apos;t have an account?</p>
-                  <span className="text-blue-400" onClick={() => navigate('/register')}>Sign Up</span>
+                  <p>Do you have an account?</p>
+                  <span className="text-blue-400" onClick={() => navigate('/login')}>Login</span>
               </div>
   
               {/* Text */}
@@ -67,4 +54,4 @@ const LoginPage = () => {
     )
 }
 
-export default LoginPage
+export default RegisterPage
