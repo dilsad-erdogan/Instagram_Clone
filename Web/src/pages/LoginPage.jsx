@@ -6,7 +6,7 @@ import Microsoft from "/microsoft.png";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { login, loginWithGoogle } from "../firebase";
-import toast, { Toaster } from 'react-hot-toast';
+import { Toaster } from 'react-hot-toast';
 
 const LoginPage = () => {
     const navigate = useNavigate();
@@ -16,24 +16,16 @@ const LoginPage = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        try{
-            const user = await login(email, password);
-            if(user) {
-                navigate('/main')
-            }
-        } catch (error) {
-            toast.error(error.message);
+        const user = await login(email, password);
+        if(user) {
+            navigate('/main');
         }
     }
 
     const handleGoogleSubmit = async () => {
-        try{
-            const user = await loginWithGoogle();
-            if(user) {
-                navigate('/main');
-            }
-        } catch (error) {
-            toast.error(error.message);
+        const user = await loginWithGoogle();
+        if(user) {
+            navigate('/main');
         }
     }
 

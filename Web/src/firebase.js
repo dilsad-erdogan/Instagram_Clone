@@ -3,6 +3,7 @@ import { initializeApp } from "firebase/app";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, signInWithPopup, GoogleAuthProvider, onAuthStateChanged } from "firebase/auth";
 import store from './redux/store';
 import { login as loginHandle, logout as logoutHandle } from "./redux/auth";
+import toast from 'react-hot-toast';
 
 const firebaseConfig = {
   apiKey: "AIzaSyDXFue_j7r9zA1orXi-q7aDZlxiQtubkQI",
@@ -18,19 +19,34 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth();
 
 export const register = async (email, password) => {
-  const { user } = await createUserWithEmailAndPassword(auth, email, password);
-  return user;
+  try{
+    const { user } = await createUserWithEmailAndPassword(auth, email, password);
+    if(user) {
+      toast.success('You have successfully registered!');
+    }
+    return user;
+  } catch (error) {
+    toast.error(error.message);
+  }
 }
 
 export const login = async (email, password) => {
-  const { user } = await signInWithEmailAndPassword(auth, email, password);
-  return user;
+  try{
+    const { user } = await signInWithEmailAndPassword(auth, email, password);
+    return user;
+  } catch (error) {
+    toast.error(error.message);
+  }
 }
 
 export const loginWithGoogle = async () => {
-  const provider = new GoogleAuthProvider();
-  const { user } = await signInWithPopup(auth, provider);
-  return user;
+  try{
+    const provider = new GoogleAuthProvider();
+    const { user } = await signInWithPopup(auth, provider);
+    return user;
+  } catch (error) {
+    toast.error(error.message);
+  }
 }
 
 onAuthStateChanged(auth, (user) => {

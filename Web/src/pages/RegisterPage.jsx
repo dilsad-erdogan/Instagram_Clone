@@ -5,7 +5,7 @@ import Microsoft from "/microsoft.png";
 import { useNavigate } from "react-router-dom";
 import { register } from "../firebase";
 import { useState } from "react";
-import toast, { Toaster } from 'react-hot-toast';
+import { Toaster } from 'react-hot-toast';
 
 const RegisterPage = () => {
     const navigate = useNavigate();
@@ -15,15 +15,8 @@ const RegisterPage = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        try{
-            const user = await register(email, password);
-            if(user) {
-                toast.success('You have successfully registered!');
-                navigate('/login');
-            }
-        } catch (error) {
-            toast.error(error.message);
-        }
+        await register(email, password);
+        navigate('/login');
     }
 
     return (
