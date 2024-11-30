@@ -3,12 +3,33 @@ import Logo from "/insta_logo.png";
 import PlayStore from "/playstore.png";
 import Microsoft from "/microsoft.png";
 import { useNavigate } from "react-router-dom";
+import { register } from "../firebase";
+import { useState } from "react";
+import toast, { Toaster } from 'react-hot-toast';
 
 const RegisterPage = () => {
     const navigate = useNavigate();
+    
+    const [email, setEmail] = useState(''); 
+    const [password, setPassword] = useState(''); 
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try{
+            const user = await register(email, password);
+            if(user) {
+                toast('You have successfully registered!');
+                navigate('/login');
+            }
+        } catch (error) {
+            toast.error(error.message);
+        }
+    }
 
     return (
       <div className="flex justify-center items-center h-screen">
+        <Toaster position="top-right" />
+
         {/* Main Container */}
         <div className="flex flex-row justify-center items-center w-full max-w-[1200px]">
           {/* Img Section */}
@@ -24,11 +45,10 @@ const RegisterPage = () => {
                   <img src={Logo} alt="Logo" className="m-5" />
                   
                   {/* Form */}
-                  <form className="flex flex-col gap-5 w-full mb-5">
-                      <input type="text" className="bg-black border border-gray-600 text-white text-sm rounded-lg block w-full p-2.5" placeholder="Name" required />
-                      <input type="email" className="bg-black border border-gray-600 text-white text-sm rounded-lg block w-full p-2.5" placeholder="Email" required />
-                      <input type="password" className="bg-black border border-gray-600 text-white text-sm rounded-lg block w-full p-2.5" placeholder="Password" required />
-                      <button type="submit" className="text-white bg-blue-400 hover:bg-blue-800 font-medium rounded-lg w-full text-sm px-5 py-2.5 me-2 mb-2">Register</button>
+                  <form className="flex flex-col gap-5 w-full mb-5" onSubmit={handleSubmit}>
+                      <input type="email" className="bg-black border border-gray-600 text-white text-sm rounded-lg block w-full p-2.5" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} required />
+                      <input type="password" className="bg-black border border-gray-600 text-white text-sm rounded-lg block w-full p-2.5" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} required />
+                      <button disabled={!email || !password} type="submit" className="text-white bg-blue-400 hover:bg-blue-800 disabled:bg-blue-200 font-medium rounded-lg w-full text-sm px-5 py-2.5 me-2 mb-2">Register</button>
                   </form>
               </div>
   
