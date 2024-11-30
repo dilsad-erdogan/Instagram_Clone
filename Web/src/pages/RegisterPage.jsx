@@ -18,7 +18,7 @@ const RegisterPage = () => {
         try{
             const user = await register(email, password);
             if(user) {
-                toast('You have successfully registered!');
+                toast.success('You have successfully registered!');
                 navigate('/login');
             }
         } catch (error) {

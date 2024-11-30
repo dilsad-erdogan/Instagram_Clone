@@ -5,14 +5,11 @@ import PlayStore from "/playstore.png";
 import Microsoft from "/microsoft.png";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { login } from "../firebase";
+import { login, loginWithGoogle } from "../firebase";
 import toast, { Toaster } from 'react-hot-toast';
-import { useDispatch } from "react-redux";
-import { login as loginHandle } from "../redux/auth";
 
 const LoginPage = () => {
     const navigate = useNavigate();
-    const dispatch = useDispatch();
 
     const [email, setEmail] = useState(''); 
     const [password, setPassword] = useState(''); 
@@ -22,8 +19,18 @@ const LoginPage = () => {
         try{
             const user = await login(email, password);
             if(user) {
-                dispatch(loginHandle(user));
                 navigate('/main')
+            }
+        } catch (error) {
+            toast.error(error.message);
+        }
+    }
+
+    const handleGoogleSubmit = async () => {
+        try{
+            const user = await loginWithGoogle();
+            if(user) {
+                navigate('/main');
             }
         } catch (error) {
             toast.error(error.message);
@@ -63,7 +70,7 @@ const LoginPage = () => {
                   </div>
   
                   {/* Login Google */}
-                  <div className="flex justify-center items-center p-4 gap-5">
+                  <div className="flex justify-center items-center p-4 gap-5" onClick={handleGoogleSubmit}>
                       <img src={GoogleIcon} alt="GoogleIcon" className="max-h-6" />
                       <p className="text-blue-400">Log in with Google</p>
                   </div>

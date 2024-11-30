@@ -1,6 +1,8 @@
 
 import { initializeApp } from "firebase/app";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut  } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, signInWithPopup, GoogleAuthProvider, onAuthStateChanged } from "firebase/auth";
+import store from './redux/store';
+import { login as loginHandle, logout as logoutHandle } from "./redux/auth";
 
 const firebaseConfig = {
   apiKey: "AIzaSyDXFue_j7r9zA1orXi-q7aDZlxiQtubkQI",
@@ -13,7 +15,6 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
-
 const auth = getAuth();
 
 export const register = async (email, password) => {
@@ -25,6 +26,20 @@ export const login = async (email, password) => {
   const { user } = await signInWithEmailAndPassword(auth, email, password);
   return user;
 }
+
+export const loginWithGoogle = async () => {
+  const provider = new GoogleAuthProvider();
+  const { user } = await signInWithPopup(auth, provider);
+  return user;
+}
+
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    store.dispatch(loginHandle(user));
+  } else {
+    store.dispatch(logoutHandle());
+  }
+});
 
 export const logout = async () => {
   await signOut(auth);
