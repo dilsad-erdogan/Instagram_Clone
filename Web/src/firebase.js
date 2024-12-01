@@ -4,16 +4,27 @@ import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, si
 import store from './redux/store';
 import { login as loginHandle, logout as logoutHandle } from "./redux/auth";
 import toast from 'react-hot-toast';
+import { VITE_API_KEY, VITE_APP_ID, VITE_AUTH_DOMAIN, VITE_MEASUREMENT_ID, VITE_MESSAGING_SENDER_ID, VITE_PROJECT_ID, VITE_STORAGE_BUCKET } from "./envConfig";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDXFue_j7r9zA1orXi-q7aDZlxiQtubkQI",
-  authDomain: "instagram-clone-e68fa.firebaseapp.com",
-  projectId: "instagram-clone-e68fa",
-  storageBucket: "instagram-clone-e68fa.firebasestorage.app",
-  messagingSenderId: "110389052041",
-  appId: "1:110389052041:web:1a8cf2fddf1a684aaebc58",
-  measurementId: "G-6EJLNKSSZ9"
+  apiKey: VITE_API_KEY,
+  authDomain: VITE_AUTH_DOMAIN,
+  projectId: VITE_PROJECT_ID,
+  storageBucket: VITE_STORAGE_BUCKET,
+  messagingSenderId: VITE_MESSAGING_SENDER_ID,
+  appId: VITE_APP_ID,
+  measurementId: VITE_MEASUREMENT_ID
 };
+
+// const firebaseConfig = {
+//   apiKey: "AIzaSyDXFue_j7r9zA1orXi-q7aDZlxiQtubkQI",
+//   authDomain: "instagram-clone-e68fa.firebaseapp.com",
+//   projectId: "instagram-clone-e68fa",
+//   storageBucket: "instagram-clone-e68fa.firebasestorage.app",
+//   messagingSenderId: "110389052041",
+//   appId: "1:110389052041:web:1a8cf2fddf1a684aaebc58",
+//   measurementId: "G-6EJLNKSSZ9"
+// };
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth();
