@@ -2,7 +2,7 @@ import { useSelector } from "react-redux"
 import MainSidebar from "../components/sidebar/MainSidebar";
 import SmallSidebar from "../components/sidebar/SmallSidebar";
 
-const MainPage = () => {
+const CreatePage = () => {
   const { user } = useSelector(state => state.auth);
 
   return (
@@ -29,4 +29,4 @@ const MainPage = () => {
   );
 }
 
-export default MainPage
+export default CreatePage

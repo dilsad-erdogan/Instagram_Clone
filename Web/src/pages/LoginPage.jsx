@@ -30,7 +30,7 @@ const LoginPage = () => {
     }
 
     return (
-      <div className="flex justify-center items-center h-screen">
+      <div className="flex justify-center items-center">
         <Toaster position="top-right" />
 
         {/* Main Container */}
