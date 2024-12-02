@@ -10,12 +10,13 @@ import { Toaster } from 'react-hot-toast';
 const RegisterPage = () => {
     const navigate = useNavigate();
     
+    const [name, setName] = useState(''); 
     const [email, setEmail] = useState(''); 
     const [password, setPassword] = useState(''); 
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        await register(email, password);
+        await register(name, email, password);
         navigate('/login');
     }
 
@@ -39,6 +40,7 @@ const RegisterPage = () => {
                   
                   {/* Form */}
                   <form className="flex flex-col gap-5 w-full mb-5" onSubmit={handleSubmit}>
+                      <input type="text" className="bg-black border border-gray-600 text-white text-sm rounded-lg block w-full p-2.5" placeholder="Name" value={name} onChange={(e) => setName(e.target.value)} required />
                       <input type="email" className="bg-black border border-gray-600 text-white text-sm rounded-lg block w-full p-2.5" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} required />
                       <input type="password" className="bg-black border border-gray-600 text-white text-sm rounded-lg block w-full p-2.5" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} required />
                       <button disabled={!email || !password} type="submit" className="text-white bg-blue-400 hover:bg-blue-800 disabled:bg-blue-200 font-medium rounded-lg w-full text-sm px-5 py-2.5 me-2 mb-2">Register</button>

@@ -1,6 +1,7 @@
 
 import { initializeApp } from "firebase/app";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, signInWithPopup, GoogleAuthProvider, onAuthStateChanged } from "firebase/auth";
+import { getFirestore, doc, setDoc } from "firebase/firestore";
 import store from './redux/store';
 import { login as loginHandle, logout as logoutHandle } from "./redux/auth";
 import toast from 'react-hot-toast';
@@ -17,13 +18,27 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
+const firestore = getFirestore(app);
 const auth = getAuth();
 
-export const register = async (email, password) => {
+export const register = async (name, email, password) => {
   try{
     const { user } = await createUserWithEmailAndPassword(auth, email, password);
     if(user) {
       toast.success('You have successfully registered!');
+      
+      const userDoc = {
+        uid: user.uid,
+        email: email,
+        name: name,
+        bio: "",
+        profilePicUrl: "",
+        followers: [],
+        following: [],
+        createdAt: Date.now()
+      };
+      console.log(userDoc);
+      await setDoc(doc(firestore, "users", user.uid), userDoc);
     }
     return user;
   } catch (error) {
