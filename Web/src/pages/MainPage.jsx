@@ -1,86 +1,27 @@
-//import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import MainSidebar from "../components/sidebar/MainSidebar";
 import SmallSidebar from "../components/sidebar/SmallSidebar";
-import Img1 from "/img1.png";
-import Img2 from "/img2.png";
-import Img3 from "/img3.png";
-import Img4 from "/img4.png";
 import PostCard from "../components/postCard/PostCard";
-
-const posts = [
-  {
-    id: 1,
-    caption: 'captioncaptioncaptioncaptioncaption',
-    imgUrl: Img1,
-    likes: 3,
-    comments: [
-      {
-        id: 1,
-        comment: 'selaammm!!',
-        createdBy: 'dlsd',
-        createdAt: '10h ago'
-      },
-      {
-        id: 2,
-        comment: 'selaammm!!',
-        createdBy: 'dlsd',
-        createdAt: '6h ago'
-      },
-    ],
-    createdAt: '20h ago',
-    createdBy: 'dlsd'
-  },
-  {
-    id: 2,
-    caption: 'captioncaptioncaptioncaptioncaption',
-    imgUrl: Img2,
-    likes: 5,
-    comments: [],
-    createdAt: '20h ago',
-    createdBy: 'dlsd'
-  },
-  {
-    id: 3,
-    caption: 'captioncaptioncaptioncaptioncaption',
-    imgUrl: Img3,
-    likes: 6,
-    comments: [
-      {
-        id: 1,
-        comment: 'selaammm!!',
-        createdBy: 'dlsd',
-        createdAt: '10h ago'
-      }
-    ],
-    createdAt: '20h ago',
-    createdBy: 'dlsd'
-  },
-  {
-    id: 4,
-    caption: 'captioncaptioncaptioncaptioncaption',
-    imgUrl: Img4,
-    likes: 0,
-    comments: [
-      {
-        id: 1,
-        comment: 'selaammm!!',
-        createdBy: 'dlsd',
-        createdAt: '10h ago'
-      },
-      {
-        id: 2,
-        comment: 'selaammm!!',
-        createdBy: 'dlsd',
-        createdAt: '6h ago'
-      },
-    ],
-    createdAt: '20h ago',
-    createdBy: 'dlsd'
-  },
-];
+import { useEffect } from "react";
+import { fetchPosts } from "../firebase/post/post";
+import { fetchPosts as handleFetchPosts } from "../redux/posts";
 
 const MainPage = () => {
-  //const { user } = useSelector(state => state.auth);
+  const { posts } = useSelector(state => state.posts);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    fetchPostsThunk();
+  }, []);
+
+  const fetchPostsThunk = async () => {
+    try {
+      const posts = await fetchPosts();
+      dispatch(handleFetchPosts(posts));
+    } catch (error) {
+      console.error(error.message);
+    }
+  }
 
   return (
     <div className="flex w-full h-screen overflow-hidden">

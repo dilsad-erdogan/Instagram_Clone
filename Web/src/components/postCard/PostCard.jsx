@@ -16,7 +16,7 @@ const PostCard = ({ post }) => {
       </div>
       
       {/* Post Image */}
-      <img src={post.imgUrl} alt="" className="w-full max-h-[500px] object-cover rounded-md mt-2" />
+      <img src={post.imgUrl} alt="Post" className="w-full max-h-[500px] object-cover rounded-md mt-2" />
 
       <div className="flex gap-2 items-center mt-3 text-xl">
         <div onClick={handleLiked}>

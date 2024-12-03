@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import { useState } from 'react';
 import { setPost } from '../../firebase/post/post';
+import toast from 'react-hot-toast';
 
 const CreatePost = ({ isOpen, onClose }) => {
     const [caption, setCaption] = useState("");
@@ -10,11 +11,17 @@ const CreatePost = ({ isOpen, onClose }) => {
     const handleImageChange = (e) => {
         if (e.target.files && e.target.files[0]) {
             const file = e.target.files[0];
-            setSelectedImage(URL.createObjectURL(file));
+            const previewUrl = URL.createObjectURL(file);
+            setSelectedImage({ previewUrl, file });
         }
     };
 
     const handlePost = async () => {
+        if (!selectedImage) {
+            toast.error("Please select an image");
+            return;
+        }
+
         await setPost(uid, caption, selectedImage);
         setCaption('');
         setSelectedImage(null);
@@ -43,13 +50,13 @@ const CreatePost = ({ isOpen, onClose }) => {
                 {/* File Upload */}
                 <div className="flex items-center justify-center mb-4">
                     <label htmlFor="fileInput" className="cursor-pointer bg-black text-white px-4 py-2 rounded-md border shadow-lg">Select Image</label>
-                    <input id="fileInput" type="file" accept="image/*" className="hidden" onChange={handleImageChange} />
+                    <input id="fileInput" type="file" className="hidden" onChange={handleImageChange} />
                 </div>
 
                 {/* Image Preview */}
                 {selectedImage && (
                     <div className="flex items-center justify-center mb-4">
-                        <img src={selectedImage} alt="Selected" className="max-w-full max-h-48 rounded-md" />
+                        <img src={selectedImage.previewUrl} alt="Selected" className="max-w-full max-h-48 rounded-md" />
                     </div>
                 )}
 
