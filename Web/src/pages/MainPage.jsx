@@ -94,7 +94,7 @@ const MainPage = () => {
 
       {/* Content */}
       <div className="w-5/6 p-5 flex justify-center overflow-y-auto">
-        <div className="w-1/2">
+        <div className="lg:w-1/2">
           {posts.map((post) => (
             <div key={post.id} className="p-2">
               <PostCard post={post} />
