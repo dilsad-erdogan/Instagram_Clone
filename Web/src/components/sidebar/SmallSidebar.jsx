@@ -2,7 +2,10 @@ import { useLocation, useNavigate } from "react-router-dom"
 import Logo from "/insta_logo.png";
 import { FiLogOut } from "react-icons/fi";
 import { logout } from "../../firebase/auth/login.js"
-import sidebarData from "../../configData";
+import { RiHomeHeartFill, RiHomeHeartLine } from "react-icons/ri";
+import { BsFillSearchHeartFill } from "react-icons/bs";
+import { IoMdNotifications } from "react-icons/io";
+import { FaPlusCircle, FaUserAlt, FaUserCircle } from "react-icons/fa";
 
 const SmallSidebar = () => {
   const navigate = useNavigate();
@@ -23,13 +26,35 @@ const SmallSidebar = () => {
 
         {/* Menu items */}
         <div className="flex flex-col gap-10 justify-center items-center mt-10">
-          {sidebarData.map((data) => (
-            <div key={data.id} className="flex items-center" onClick={() => navigate(`/${data.path}`)}>
-              <div className="text-2xl">
-                {path===data.path ? (data.icon1) : (data.icon2)}
-              </div>
+          <div className="flex items-center" onClick={() => navigate(`/main`)}>
+            <div className="text-2xl">
+              {path==='main' ? <RiHomeHeartFill /> : <RiHomeHeartLine />}
             </div>
-          ))}
+          </div>
+
+          <div className="flex items-center" onClick={() => console.log('search')}>
+            <div className="text-2xl">
+              <BsFillSearchHeartFill />
+            </div>
+          </div>
+
+          <div className="flex items-center" onClick={() => console.log('notification')}>
+            <div className="text-2xl">
+              <IoMdNotifications />
+            </div>
+          </div>
+
+          <div className="flex items-center" onClick={() => console.log('create')}>
+            <div className="text-2xl">
+              <FaPlusCircle />
+            </div>
+          </div>
+
+          <div className="flex items-center" onClick={() => navigate(`/profile`)}>
+            <div className="text-2xl">
+              {path==='profile' ? <FaUserCircle /> : <FaUserAlt />}
+            </div>
+          </div>
         </div>
       </div>
 

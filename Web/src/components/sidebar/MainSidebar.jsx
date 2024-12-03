@@ -2,7 +2,10 @@ import { useLocation, useNavigate } from "react-router-dom";
 import Logo from "/insta_logo.png";
 import { FiLogOut } from "react-icons/fi";
 import { logout } from "../../firebase/auth/login.js";
-import sidebarData from "../../configData.jsx";
+import { RiHomeHeartFill, RiHomeHeartLine } from "react-icons/ri";
+import { BsFillSearchHeartFill } from "react-icons/bs";
+import { IoMdNotifications } from "react-icons/io";
+import { FaPlusCircle, FaUserAlt, FaUserCircle } from "react-icons/fa";
 
 const MainSidebar = () => {
     const navigate = useNavigate();
@@ -23,15 +26,45 @@ const MainSidebar = () => {
 
                 {/* Menu items */}
                 <div className="flex flex-col gap-10 justify-center items-start mt-10">
-                    {sidebarData.map((data) => (
-                        <div key={data.id} className="flex items-center gap-5" onClick={() => navigate(`/${data.path}`)}>
-                            <div className="text-2xl">
-                                {path===data.path ? (data.icon1) : (data.icon2)}
-                            </div>
-
-                            <div className="text-xl">{data.path}</div>
+                    <div className="flex items-center gap-5" onClick={() => navigate(`/main`)}>
+                        <div className="text-2xl">
+                            {path==='main' ? <RiHomeHeartFill /> : <RiHomeHeartLine />}
                         </div>
-                    ))}
+
+                        <div className="text-xl">Main</div>
+                    </div>
+
+                    <div className="flex items-center gap-5" onClick={() => console.log('search')}>
+                        <div className="text-2xl">
+                            <BsFillSearchHeartFill />
+                        </div>
+
+                        <div className="text-xl">Search</div>
+                    </div>
+
+                    <div className="flex items-center gap-5" onClick={() => console.log('notification')}>
+                        <div className="text-2xl">
+                            <IoMdNotifications />
+                        </div>
+
+                        <div className="text-xl">Notification</div>
+                    </div>
+
+                    <div className="flex items-center gap-5" onClick={() => console.log('create')}>
+                        <div className="text-2xl">
+                            <FaPlusCircle />
+                        </div>
+
+                        <div className="text-xl">Create</div>
+                    </div>
+
+                    <div className="flex items-center gap-5" onClick={() => navigate(`/profile`)}>
+                        <div className="text-2xl">
+                            {path==='profile' ? <FaUserCircle /> : <FaUserAlt />}
+                        </div>
+
+                        <div className="text-xl">Profile</div>
+                    </div>
                 </div>
             </div>
 

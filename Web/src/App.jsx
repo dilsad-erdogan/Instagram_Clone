@@ -4,7 +4,6 @@ import RegisterPage from './pages/RegisterPage';
 import MainPage from './pages/MainPage';
 import SearchPage from './pages/SearchPage';
 import NotiPage from './pages/NotiPage';
-import CreatePage from './pages/CreatePage';
 import ProfilePage from './pages/ProfilePage';
 
 function App() {
@@ -18,7 +17,6 @@ function App() {
           <Route path="/main" element={<MainPage />} />
           <Route path="/search" element={<SearchPage />} />
           <Route path="/notification" element={<NotiPage />} />
-          <Route path="/create" element={<CreatePage />} />
           <Route path="/profile" element={<ProfilePage />} />
         </Routes>
       </Router>
