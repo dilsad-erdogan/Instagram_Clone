@@ -6,15 +6,29 @@ import { RiHomeHeartFill, RiHomeHeartLine } from "react-icons/ri";
 import { BsFillSearchHeartFill } from "react-icons/bs";
 import { IoMdNotifications } from "react-icons/io";
 import { FaPlusCircle, FaUserAlt, FaUserCircle } from "react-icons/fa";
+import SearchUser from "../modals/SearchUser.jsx";
+import CreatePost from "../modals/CreatePost.jsx";
+import { useState } from "react";
 
 const SmallSidebar = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const path = location.pathname.split("/").filter(Boolean).pop();
 
+  const [openSearchModal, setOpenSearchModal] = useState(false);
+  const [openCreateModal, setOpenCreateModal] = useState(false);
+
   const handleLogout = async () => {
     await logout();
     navigate('/login');
+  };
+
+  const handleSearch = () => {
+    setOpenSearchModal(true);
+  };
+
+  const handleCreate = () => {
+    setOpenCreateModal(true);
   };
 
   return (
@@ -32,7 +46,7 @@ const SmallSidebar = () => {
             </div>
           </div>
 
-          <div className="flex items-center" onClick={() => console.log('search')}>
+          <div className="flex items-center" onClick={handleSearch}>
             <div className="text-2xl">
               <BsFillSearchHeartFill />
             </div>
@@ -44,7 +58,7 @@ const SmallSidebar = () => {
             </div>
           </div>
 
-          <div className="flex items-center" onClick={() => console.log('create')}>
+          <div className="flex items-center" onClick={handleCreate}>
             <div className="text-2xl">
               <FaPlusCircle />
             </div>
@@ -62,6 +76,9 @@ const SmallSidebar = () => {
       <div className="flex justify-center items-center p-5" onClick={handleLogout}>
         <div className="text-2xl"><FiLogOut /></div>
       </div>
+
+      <SearchUser isOpen={openSearchModal} onClose={() => setOpenSearchModal(false)} />
+      <CreatePost isOpen={openCreateModal} onClose={() => setOpenCreateModal(false)} />
     </div>
   )
 }
