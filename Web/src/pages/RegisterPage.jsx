@@ -3,7 +3,7 @@ import Logo from "/insta_logo.png";
 import PlayStore from "/playstore.png";
 import Microsoft from "/microsoft.png";
 import { useNavigate } from "react-router-dom";
-import { register } from "../firebase";
+import { register } from "../firebase/auth/register.js";
 import { useState } from "react";
 import { Toaster } from 'react-hot-toast';
 

@@ -5,7 +5,8 @@ import PlayStore from "/playstore.png";
 import Microsoft from "/microsoft.png";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { login, loginWithGoogle } from "../firebase";
+import { loginWithGoogle } from "../firebase/auth/login";
+import { login } from '../firebase/auth/login';
 import { Toaster } from 'react-hot-toast';
 
 const LoginPage = () => {

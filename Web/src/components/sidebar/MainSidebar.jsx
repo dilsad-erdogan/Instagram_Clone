@@ -1,7 +1,7 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import Logo from "/insta_logo.png";
 import { FiLogOut } from "react-icons/fi";
-import { logout } from "../../firebase";
+import { logout } from "../../firebase/auth/login.js";
 import sidebarData from "../../configData.jsx";
 
 const MainSidebar = () => {
