@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { FaRegHeart, FaHeart, FaRegComment } from "react-icons/fa";
+import PropTypes from 'prop-types';
 
 const PostCard = ({ post }) => {
   const [isLiked, setIsLiked] = useState(false);
@@ -39,5 +40,9 @@ const PostCard = ({ post }) => {
     </div>
   );
 }
+
+PostCard.propTypes = {
+  post: PropTypes.object.isRequired
+};
 
 export default PostCard;

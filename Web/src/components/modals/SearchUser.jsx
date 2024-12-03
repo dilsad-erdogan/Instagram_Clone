@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 
 const SearchUser = ({ isOpen, onClose }) => {
     const handleClose = () => {
@@ -16,5 +17,10 @@ const SearchUser = ({ isOpen, onClose }) => {
         </div>
     )
 }
+
+SearchUser.propTypes = {
+    isOpen: PropTypes.bool.isRequired,
+    onClose: PropTypes.func.isRequired
+};
 
 export default SearchUser
