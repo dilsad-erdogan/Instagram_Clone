@@ -11,13 +11,7 @@ const PostCard = ({ post }) => {
 
   useEffect(() => {
     const getUser = async () => {
-      console.log("Fetching user with ID:", post.createdBy);
       const fetchedUser = await fetchUserById(post.createdBy);
-      if (fetchedUser) {
-        console.log("Fetched User:", fetchedUser);
-      } else {
-        console.error("User not found for ID:", post.createdBy);
-      }
       setUser(fetchedUser);
     };
     getUser();

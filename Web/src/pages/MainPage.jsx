@@ -5,6 +5,8 @@ import PostCard from "../components/postCard/PostCard";
 import { useEffect } from "react";
 import { fetchPosts } from "../firebase/post/post";
 import { fetchPosts as handleFetchPosts } from "../redux/posts";
+import { fetchAllUsers } from "../firebase/auth/user";
+import { setUsers } from "../redux/user";
 
 const MainPage = () => {
   const { posts } = useSelector(state => state.posts);
@@ -13,6 +15,15 @@ const MainPage = () => {
   useEffect(() => {
     fetchPostsThunk();
   }, []);
+
+  useEffect(() => {
+    const loadUsers = async () => {
+      const users = await fetchAllUsers();
+      dispatch(setUsers(users));
+    };
+
+    loadUsers();
+  }, [dispatch]);
 
   const fetchPostsThunk = async () => {
     try {
