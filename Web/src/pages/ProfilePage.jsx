@@ -1,12 +1,15 @@
 import { useSelector } from "react-redux"
 import MainSidebar from "../components/sidebar/MainSidebar";
 import SmallSidebar from "../components/sidebar/SmallSidebar";
+import { Toaster } from "react-hot-toast";
 
 const ProfilePage = () => {
   const { user } = useSelector(state => state.auth);
 
   return (
     <div className="flex w-full h-full fixed overflow-hidden">
+      <Toaster position="top-right" />
+
       {/* Sidebar */}
       <div className="hidden lg:block w-1/6 p-5 overflow-y-auto border-r border-white">
         <MainSidebar />

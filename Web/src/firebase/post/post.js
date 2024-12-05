@@ -1,4 +1,4 @@
-import { addDoc, collection, getDocs } from "firebase/firestore"
+import { addDoc, arrayUnion, collection, doc, getDocs, updateDoc } from "firebase/firestore"
 import { firestore } from "../firebase"
 import toast from "react-hot-toast";
 
@@ -33,7 +33,7 @@ export const setPost = async (userId, caption, selectedImage) => {
     } catch (error) {
         toast.error(error.message);
     }
-}
+};
 
 export const fetchPosts = async () => {
     try {
@@ -44,6 +44,28 @@ export const fetchPosts = async () => {
             ...doc.data(),
         }));
         return posts;
+    } catch (error) {
+        toast.error(error.message);
+    }
+};
+
+export const addCommentToPost = async (postId, userId, commentText) => {
+    try {
+        // Post belgesine referans oluştur
+        const postRef = doc(firestore, "posts", postId);
+
+        const comment = {
+            createdBy: userId,
+            comment: commentText,
+            createdAt: Date.now()
+        };
+
+        // Yorum ekleme işlemi
+        await updateDoc(postRef, {
+            comments: arrayUnion(comment),
+        });
+
+        toast.success("Comment added successfully!");
     } catch (error) {
         toast.error(error.message);
     }

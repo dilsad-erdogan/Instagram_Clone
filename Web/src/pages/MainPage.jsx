@@ -7,6 +7,7 @@ import { fetchPosts } from "../firebase/post/post";
 import { fetchPosts as handleFetchPosts } from "../redux/posts";
 import { fetchAllUsers } from "../firebase/auth/user";
 import { setUsers } from "../redux/user";
+import { Toaster } from "react-hot-toast";
 
 const MainPage = () => {
   const { posts } = useSelector(state => state.posts);
@@ -36,6 +37,8 @@ const MainPage = () => {
 
   return (
     <div className="flex w-full h-screen overflow-hidden">
+      <Toaster position="top-right" />
+      
       {/* Sidebar */}
       <div className="hidden lg:block w-1/6 p-5 overflow-y-auto border-r border-white">
         <MainSidebar />

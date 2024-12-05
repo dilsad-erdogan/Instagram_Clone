@@ -2,12 +2,18 @@ import { useEffect, useState } from "react";
 import { FaRegHeart, FaHeart, FaRegComment } from "react-icons/fa";
 import PropTypes from 'prop-types';
 import { fetchUserById } from "../../firebase/auth/user";
+import Comments from "../modals/Comments";
 
 const PostCard = ({ post }) => {
   const [isLiked, setIsLiked] = useState(false);
   const [user, setUser] = useState(null);
+  const [openModal, setOpenModal] = useState(false);
 
   const handleLiked = () => {setIsLiked(!isLiked)};
+
+  const handleComment = () => {
+    setOpenModal(true);
+  };
 
   useEffect(() => {
     const getUser = async () => {
@@ -33,7 +39,7 @@ const PostCard = ({ post }) => {
           {isLiked ? <FaHeart className="text-red-700" /> : <FaRegHeart />}
         </div>
         
-        <FaRegComment />
+        <FaRegComment onClick={handleComment} />
       </div>
       
       {/* Post Details */}
@@ -47,6 +53,8 @@ const PostCard = ({ post }) => {
 
         <p className="text-sm text-gray-700">View all {post.comments.length} comments</p>
       </div>
+
+      <Comments isOpen={openModal} onClose={setOpenModal} post={post} />
     </div>
   );
 }
