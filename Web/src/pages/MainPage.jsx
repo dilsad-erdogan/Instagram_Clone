@@ -52,7 +52,7 @@ const MainPage = () => {
         <div className="lg:w-1/2">
           {posts.map((post) => (
             <div key={post.id} className="p-2">
-              <PostCard post={post} />
+              <PostCard post={post} onCommentAdded={fetchPostsThunk} />
             </div>
           ))}
         </div>

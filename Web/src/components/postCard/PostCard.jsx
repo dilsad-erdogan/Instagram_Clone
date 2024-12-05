@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { fetchUserById } from "../../firebase/auth/user";
 import Comments from "../modals/Comments";
 
-const PostCard = ({ post }) => {
+const PostCard = ({ post, onCommentAdded }) => {
   const [isLiked, setIsLiked] = useState(false);
   const [user, setUser] = useState(null);
   const [openModal, setOpenModal] = useState(false);
@@ -51,16 +51,17 @@ const PostCard = ({ post }) => {
           <h2 className="font-semibold truncate">{post.caption}</h2>
         </div>
 
-        <p className="text-sm text-gray-700">View all {post.comments.length} comments</p>
+        <p className="text-sm text-gray-700" onClick={handleComment}>View all {post.comments.length} comments</p>
       </div>
 
-      <Comments isOpen={openModal} onClose={setOpenModal} post={post} />
+      <Comments isOpen={openModal} onClose={setOpenModal} post={post} onCommentAdded={onCommentAdded} />
     </div>
   );
 }
 
 PostCard.propTypes = {
-  post: PropTypes.object.isRequired
+  post: PropTypes.object.isRequired,
+  onCommentAdded: PropTypes.func.isRequired
 };
 
 export default PostCard;
