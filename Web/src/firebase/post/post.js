@@ -1,4 +1,4 @@
-import { addDoc, arrayUnion, collection, doc, getDocs, updateDoc } from "firebase/firestore"
+import { addDoc, arrayRemove, arrayUnion, collection, doc, getDocs, updateDoc } from "firebase/firestore"
 import { firestore } from "../firebase"
 import toast from "react-hot-toast";
 
@@ -19,7 +19,7 @@ export const setPost = async (userId, caption, selectedImage) => {
             const postDoc = {
               caption,
               imgUrl: data.data.url,
-              likes: 0,
+              likes: [],
               comments: [],
               createdAt: Date.now(),
               createdBy: userId,
@@ -66,6 +66,29 @@ export const addCommentToPost = async (postId, userId, commentText) => {
         });
 
         toast.success("Comment added successfully!");
+    } catch (error) {
+        toast.error(error.message);
+    }
+};
+
+export const setLiked = async (postId, userId, isUnLiked = false) => {
+    try{
+        const postRef = doc(firestore, "posts", postId);
+        const userLiked = { uid: userId };
+
+        if(isUnLiked) {
+            // Unliked işlemi
+            await updateDoc(postRef, {
+                likes: arrayRemove(userLiked),
+            });
+            toast.success("Unliked!");
+        } else {
+            // Liked işlemi
+            await updateDoc(postRef, {
+                likes: arrayUnion(userLiked),
+            });
+            toast.success("Liked!");
+        }
     } catch (error) {
         toast.error(error.message);
     }
