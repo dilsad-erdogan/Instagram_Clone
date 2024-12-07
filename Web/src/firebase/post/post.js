@@ -1,4 +1,4 @@
-import { addDoc, arrayRemove, arrayUnion, collection, doc, getDocs, updateDoc } from "firebase/firestore"
+import { addDoc, arrayRemove, arrayUnion, collection, doc, getDocs, query, updateDoc, where } from "firebase/firestore"
 import { firestore } from "../firebase"
 import toast from "react-hot-toast";
 
@@ -92,4 +92,22 @@ export const setLiked = async (postId, userId, isUnLiked = false) => {
     } catch (error) {
         toast.error(error.message);
     }
+};
+
+export const fetchUserPosts = async (userId) => {
+    try {
+        const postsCollectionRef = collection(firestore, "posts");
+        const q = query(postsCollectionRef, where("createdBy", "==", userId));
+        const querySnapshot = await getDocs(q);
+    
+        const userPosts = querySnapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+    
+        return userPosts;
+      } catch (error) {
+        toast.error(error.message);
+        return [];
+      }
 };
