@@ -81,7 +81,7 @@ const ProfilePage = () => {
           <div className="mt-10">
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
               {userPosts.map((post) => (
-                <div key={post.id} className="w-full">
+                <div key={post.id} className="w-full hover:scale-105">
                   <img src={post.imgUrl} alt={post.id} className="w-full h-auto rounded-md object-cover"/>
                 </div>
               ))}
