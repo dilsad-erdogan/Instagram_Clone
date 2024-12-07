@@ -64,3 +64,36 @@ export const followingUser = async (userId, followingId, isUnfollow = false) => 
         toast.error(error.message);
     }
 };
+
+export const updateUser = async (userId, name, bio, image) => {
+    try {
+        const formData = new FormData();
+        formData.append("image", image.file);
+
+        const response = await fetch(
+            "https://api.imgbb.com/1/upload?key=3433368c4b8f4d7437f0e6c766d6659f",
+            {
+                method: "POST",
+                body: formData,
+            }
+        );
+
+        const data = await response.json();
+
+        if (data.success) {
+            const userDoc = {
+                name: name,
+                bio: bio,
+                profilePicUrl: data.data.url
+            };
+
+            const userRef = doc(firestore, "users", userId);
+            await updateDoc(userRef, userDoc);
+            toast.success("Profile updated successfully!");
+        } else {
+            toast.error("Image upload failed!");
+        }
+    } catch (error) {
+        toast.error("Failed to update profile: " + error.message);
+    }
+};

@@ -4,10 +4,12 @@ import { Toaster } from "react-hot-toast";
 import { useEffect, useState } from "react";
 import { fetchUserPosts } from "../firebase/post/post";
 import { fetchUserById } from "../firebase/auth/user";
+import EditProfile from "../components/modals/EditProfile";
 
 const ProfilePage = () => {
   const [user, setUser] = useState(null);
   const [userPosts, setUserPosts] = useState([]);
+  const [openModal, setOpenModal] = useState(false);
 
   useEffect(() => {
     const getUserPosts = async () => {
@@ -29,7 +31,9 @@ const ProfilePage = () => {
     fetchUserData();
   }, []);
 
-  const handleEdit = () => {console.log('edit')};
+  const handleOpenModal = () => {
+    setOpenModal(true);
+  };
 
   return (
     <div className="flex w-full h-full fixed overflow-hidden">
@@ -56,7 +60,7 @@ const ProfilePage = () => {
               {/* Name and edit */}
               <div className="flex gap-6 items-center">
                 <p className="text-lg">{user?.name}</p>
-                <button className="text-white bg-blue-500 py-2 px-5 rounded-lg relative" onClick={handleEdit}>Edit</button>
+                <button className="text-white bg-blue-500 py-2 px-5 rounded-lg relative" onClick={handleOpenModal}>Edit</button>
               </div>
 
               {/* Total count */}
@@ -85,6 +89,8 @@ const ProfilePage = () => {
           </div>
         </div>
       </div>
+
+      <EditProfile isOpen={openModal} onClose={() => setOpenModal(false)} user={user}/>
     </div>
   );
 }
