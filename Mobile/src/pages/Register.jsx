@@ -4,6 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 import Logo from "../../public/insta_logo.png";
 import PlayStore from "../../public/microsoft.png";
 import Microsoft from "../../public/playstore.png";
+import { register } from '../firebase/auth';
 
 const Register = () => {
   const navigation = useNavigation();
@@ -12,7 +13,11 @@ const Register = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleSubmit = async () => {};
+  const handleSubmit = async () => {
+    console.log("handle submit")
+    await register(name, email, password);
+    navigation.navigate('Login');
+  };
 
   const handleLogin = async () => {
     navigation.navigate('Login');
@@ -33,7 +38,7 @@ const Register = () => {
             <TextInput value={password} onChangeText={setPassword} placeholder="Password" placeholderTextColor="#fff" secureTextEntry={true} className="bg-black border border-gray-600 text-white text-sm rounded-lg block w-full p-2.5" />
 
             {/* Submit Button */}
-            <TouchableOpacity onPress={handleLogin} className="bg-blue-400 disabled:bg-blue-200 font-medium rounded-lg w-full text-sm px-5 py-2.5 me-2 mb-2">
+            <TouchableOpacity onPress={handleSubmit} className="bg-blue-400 disabled:bg-blue-200 font-medium rounded-lg w-full text-sm px-5 py-2.5 me-2 mb-2">
               <Text className="text-white font-bold">Register</Text>
             </TouchableOpacity>
           </View>

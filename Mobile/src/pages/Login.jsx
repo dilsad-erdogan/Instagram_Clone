@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Text, View, Image, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import Logo from "../../public/insta_logo.png";
-import GoogleIcon from "../../public/google.png";
 import PlayStore from "../../public/microsoft.png";
 import Microsoft from "../../public/playstore.png";
 import { login } from '../firebase/auth';
@@ -19,8 +18,6 @@ const Login = () => {
       navigation.navigate('Main');
     }
   };
-
-  const hangleGoogleLogin = async () => {};
 
   const handleRegister = () => {
     navigation.navigate('Register');
@@ -46,17 +43,6 @@ const Login = () => {
             <TouchableOpacity onPress={handleLogin} style={styles.loginButton}>
               <Text style={styles.buttonText}>Login</Text>
             </TouchableOpacity>
-          </View>
-
-          {/* Or */}
-          <View style={styles.divider}>
-            <Text style={styles.dividerText}>OR</Text>
-          </View>
-
-          {/* Login Google */}
-          <View style={styles.googleLogin}>
-            <Image source={GoogleIcon} style={styles.icon} />
-            <Text onPress={hangleGoogleLogin} style={styles.googleText}>Log in with Google</Text>
           </View>
         </View>
 
@@ -132,26 +118,6 @@ const styles = StyleSheet.create({
   buttonText: {
     color: 'white',
     fontWeight: 'bold',
-  },
-  divider: {
-    alignItems: 'center',
-    width: '100%',
-    marginBottom: 20,
-  },
-  dividerText: {
-    color: 'gray',
-  },
-  googleLogin: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 10,
-  },
-  icon: {
-    width: 24,
-    height: 24,
-  },
-  googleText: {
-    color: 'blue',
   },
   changeForm: {
     padding: 20,
