@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { Text, View, Image, TextInput, TouchableOpacity } from 'react-native';
+import { Text, View, Image, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import Logo from "../../public/insta_logo.png";
 import GoogleIcon from "../../public/google.png";
 import PlayStore from "../../public/microsoft.png";
 import Microsoft from "../../public/playstore.png";
+import { login } from '../firebase/auth';
 
 const Login = () => {
   const navigation = useNavigation();
@@ -13,11 +14,10 @@ const Login = () => {
   const [password, setPassword] = useState('');
 
   const handleLogin = async () => {
-    // const user = await login(email, password);
-    // if(user) {
-    //   navigation.navigate('Main');
-    // }
-    navigation.navigate('Main');
+    const user = await login(email, password);
+    if(user) {
+      navigation.navigate('Main');
+    }
   };
 
   const hangleGoogleLogin = async () => {};
@@ -27,58 +27,163 @@ const Login = () => {
   };
 
   return (
-    <View className="bg-black h-full flex justify-center items-center">
-      <View className="flex-1 flex-col m-5 flex justify-center items-center">
+    <View style={styles.container}>
+      <View style={styles.innerContainer}>
         {/* Login Form */}
-        <View className="flex flex-col justify-center items-center p-5 border border-gray-500 rounded-lg mb-5 max-w-[450px] w-full">
+        <View style={styles.loginForm}>
           {/* Logo */}
-          <Image source={Logo} alt="Logo" className="m-5" />
+          <Image source={Logo} style={styles.logo} />
 
           {/* Form */}
-          <View className="flex flex-col gap-5 p-5 w-screen mb-5">
+          <View style={styles.form}>
             {/* Email Input */}
-            <TextInput value={email} onChangeText={setEmail} placeholder="Email" placeholderTextColor="#fff" keyboardType="email-address" className="bg-black border border-gray-600 text-white text-sm rounded-lg block w-full p-2.5" />
+            <TextInput value={email} onChangeText={setEmail} placeholder="Email" placeholderTextColor="#fff" keyboardType="email-address" style={styles.input} />
 
             {/* Password Input */}
-            <TextInput value={password} onChangeText={setPassword} placeholder="Password" placeholderTextColor="#fff" secureTextEntry={true} className="bg-black border border-gray-600 text-white text-sm rounded-lg block w-full p-2.5" />
+            <TextInput value={password} onChangeText={setPassword} placeholder="Password" placeholderTextColor="#fff" secureTextEntry={true} style={styles.input} />
 
             {/* Submit Button */}
-            <TouchableOpacity onPress={handleLogin} className="bg-blue-400 disabled:bg-blue-200 font-medium rounded-lg w-full text-sm px-5 py-2.5 me-2 mb-2">
-              <Text className="text-white font-bold">Login</Text>
+            <TouchableOpacity onPress={handleLogin} style={styles.loginButton}>
+              <Text style={styles.buttonText}>Login</Text>
             </TouchableOpacity>
           </View>
 
           {/* Or */}
-          <View className="flex items-center w-full mb-5">
-            <Text className="mx-4 text-gray-300">OR</Text>
+          <View style={styles.divider}>
+            <Text style={styles.dividerText}>OR</Text>
           </View>
 
           {/* Login Google */}
-          <View className="flex flex-row justify-center items-center p-4 gap-5">
-            <Image source={GoogleIcon} alt="Logo" className="max-h-6 max-w-6" />
-            <Text onPress={hangleGoogleLogin} className="text-blue-400">Log in with Google</Text>
+          <View style={styles.googleLogin}>
+            <Image source={GoogleIcon} style={styles.icon} />
+            <Text onPress={hangleGoogleLogin} style={styles.googleText}>Log in with Google</Text>
           </View>
         </View>
 
         {/* Change Form */}
-        <View className="flex gap-4 justify-center items-center p-5 border border-gray-500 rounded-lg mb-5 max-w-[450px] w-screen">
-          <Text className='text-white'>Don&apos;t have an account?</Text>
-          <Text className="text-blue-400" onPress={handleRegister}>Sign Up</Text>
+        <View style={styles.changeForm}>
+          <Text style={styles.whiteText}>Don't have an account?</Text>
+          <Text style={styles.linkText} onPress={handleRegister}>Sign Up</Text>
         </View>
 
         {/* Text */}
-        <View className="flex justify-center mb-5">
-          <Text className='text-white'>Get the app.</Text>    
+        <View style={styles.textContainer}>
+          <Text style={styles.whiteText}>Get the app.</Text>
         </View>
 
         {/* Google or Microsoft */}
-        <View className="flex flex-row justify-center items-center gap-5">
-          <Image source={PlayStore} alt="PlayStore" className="max-w-40 max-h-10" />
-          <Image source={Microsoft} alt="Microsoft" className="max-w-40 max-h-10" />
+        <View style={styles.appIcons}>
+          <Image source={PlayStore} style={styles.storeIcon} />
+          <Image source={Microsoft} style={styles.storeIcon} />
         </View>
       </View>
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: 'black',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  innerContainer: {
+    flex: 1,
+    margin: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  loginForm: {
+    padding: 20,
+    borderWidth: 1,
+    borderColor: 'gray',
+    borderRadius: 10,
+    marginBottom: 20,
+    alignItems: 'center',
+    maxWidth: 450,
+    width: '100%',
+  },
+  logo: {
+    margin: 20,
+    width: 300,
+    height: 100,
+    resizeMode: 'contain',
+  },
+  form: {
+    width: '100%',
+    marginBottom: 20,
+  },
+  input: {
+    backgroundColor: 'black',
+    borderWidth: 1,
+    borderColor: 'gray',
+    color: 'white',
+    borderRadius: 8,
+    padding: 10,
+    marginBottom: 10,
+  },
+  loginButton: {
+    backgroundColor: 'blue',
+    paddingVertical: 10,
+    borderRadius: 8,
+    alignItems: 'center',
+  },
+  buttonText: {
+    color: 'white',
+    fontWeight: 'bold',
+  },
+  divider: {
+    alignItems: 'center',
+    width: '100%',
+    marginBottom: 20,
+  },
+  dividerText: {
+    color: 'gray',
+  },
+  googleLogin: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 10,
+  },
+  icon: {
+    width: 24,
+    height: 24,
+  },
+  googleText: {
+    color: 'blue',
+  },
+  changeForm: {
+    padding: 20,
+    borderWidth: 1,
+    borderColor: 'gray',
+    borderRadius: 10,
+    marginBottom: 20,
+    maxWidth: 450,
+    width: '100%',
+    alignItems: 'center',
+  },
+  whiteText: {
+    color: 'white',
+  },
+  linkText: {
+    color: 'blue',
+  },
+  textContainer: {
+    marginBottom: 20,
+    alignItems: 'center',
+  },
+  appIcons: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    gap: 20,
+  },
+  storeIcon: {
+    width: 100,
+    height: 40,
+    resizeMode: 'contain',
+  },
+});
 
 export default Login;
