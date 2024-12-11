@@ -1,6 +1,6 @@
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from 'firebase/auth';
 import { auth, firestore } from "./firebaseConfig.js";
-import { doc, setDoc } from 'firebase/firestore';
+import { doc, getDoc, setDoc } from 'firebase/firestore';
 
 export const login = async (email, password) => {
   try{
@@ -39,5 +39,20 @@ export const register = async (name, email, password) => {
       return user;
   } catch (error) {
       toast.error(error.message);
+  }
+};
+
+export const fetchUserById = async (userId) => {
+  try {
+    const userDoc = doc(firestore, "users", userId);
+    const userSnapshot = await getDoc(userDoc);
+  
+    if (userSnapshot.exists()) {
+      return { id: userSnapshot.id, ...userSnapshot.data() };
+    } else {
+      throw new Error("User not found");
+    }
+  } catch (error) {
+    console.error(error.message);
   }
 };
