@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import { Text, View } from 'react-native'
+import { ScrollView, View } from 'react-native'
 import { fetchPosts } from '../firebase/post';
 import Sidebar from '../components/Sidebar';
+import PostCard from '../components/PostCard';
 
 const Main = () => {
   const [posts, setPosts] = useState([]);
@@ -29,13 +30,15 @@ const Main = () => {
 
       {/* Content */}
       <View className="w-5/6 p-5 flex justify-center overflow-y-auto">
-        <View>
-          {posts.map((post) => (
-            <View key={post.id} className='p-2'>
-              <Text className='text-white'>{post.id}</Text>              
-            </View>
-          ))}
-        </View>
+        <ScrollView>
+          <View>
+            {posts.map((post) => (
+              <View key={post.id} className='p-2'>
+                <PostCard post={post} onCommentAdded={fetchPostsThunk} />             
+              </View>
+            ))}
+          </View>
+        </ScrollView>
       </View>
     </View>
   )
