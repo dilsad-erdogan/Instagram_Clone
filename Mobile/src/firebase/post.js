@@ -37,3 +37,25 @@ export const setLiked = async (postId, userId, isUnLiked = false) => {
         console.error(error.message);
     }
 };
+
+export const addCommentToPost = async (postId, userId, commentText) => {
+    try {
+        // Post belgesine referans oluştur
+        const postRef = doc(firestore, "posts", postId);
+
+        const comment = {
+            createdBy: userId,
+            comment: commentText,
+            createdAt: Date.now()
+        };
+
+        // Yorum ekleme işlemi
+        await updateDoc(postRef, {
+            comments: arrayUnion(comment),
+        });
+
+        console.log("Comment added successfully!");
+    } catch (error) {
+        console.error(error.message);
+    }
+};

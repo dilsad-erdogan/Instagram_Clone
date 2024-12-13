@@ -4,6 +4,7 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import { fetchUserById } from '../firebase/auth'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { setLiked } from '../firebase/post'
+import Comments from './Comments'
 
 const PostCard = ({ post, onCommentAdded }) => {
     const [likes, setLikes] = useState(post.likes || []);
@@ -93,12 +94,12 @@ const PostCard = ({ post, onCommentAdded }) => {
                     <Text className="font-semibold truncate text-white">{post.caption}</Text>
                 </View>
 
-                <TouchableOpacity onPress={handleComment}>
-                    <Text className="text-sm text-gray-700 cursor-pointer">
-                        View all {post.comments.length} comments
-                    </Text>
-                </TouchableOpacity>
+                <Text onPress={handleComment} className="text-sm text-gray-700 cursor-pointer">
+                    View all {post.comments.length} comments
+                </Text>
             </View>
+
+            <Comments isOpen={openModal} onClose={setOpenModal} post={post} onCommentAdded={onCommentAdded} />
         </View>
     )
 }
