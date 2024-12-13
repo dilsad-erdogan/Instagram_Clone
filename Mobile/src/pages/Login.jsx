@@ -5,6 +5,7 @@ import Logo from "../../public/insta_logo.png";
 import PlayStore from "../../public/microsoft.png";
 import Microsoft from "../../public/playstore.png";
 import { login } from '../firebase/auth';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Login = () => {
   const navigation = useNavigation();
@@ -15,6 +16,7 @@ const Login = () => {
   const handleLogin = async () => {
     const user = await login(email, password);
     if(user) {
+      await AsyncStorage.setItem('user', JSON.stringify(user));
       navigation.navigate('Main');
     }
   };
