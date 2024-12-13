@@ -61,7 +61,6 @@ const PostCard = ({ post, onCommentAdded }) => {
 
     const handleComment = () => {
         setOpenModal(true);
-        console.log("open comment")
     };
 
     return (
