@@ -8,6 +8,7 @@ import Feather from 'react-native-vector-icons/Feather';
 import { useNavigation } from '@react-navigation/native';
 import { logout } from '../firebase/auth';
 import Search from './Search';
+import CreatePost from './CreatePost';
 
 const Sidebar = () => {
   const navigation = useNavigation();
@@ -21,6 +22,10 @@ const Sidebar = () => {
 
   const handleSearch = () => {
     setOpenSearchModal(true);
+  };
+
+  const handleCreate = () => {
+    setOpenCreateModal(true);
   };
 
   return (
@@ -39,7 +44,9 @@ const Sidebar = () => {
       <Ionicons name="notifications-outline" size={30} color="white" />
       
       {/* Add Icon */}
-      <FontAwesome name="plus-circle" size={30} color="white" />
+      <TouchableOpacity onPress={handleCreate}>
+        <FontAwesome name="plus-circle" size={30} color="white" />
+      </TouchableOpacity>
       
       {/* User Icon */}
       <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
@@ -52,6 +59,7 @@ const Sidebar = () => {
       </TouchableOpacity>
 
       <Search isOpen={openSearchModal} onClose={() => setOpenSearchModal(false)} />
+      <CreatePost isOpen={openCreateModal} onClose={() => setOpenCreateModal(false)} />
     </View>
   );
 };
