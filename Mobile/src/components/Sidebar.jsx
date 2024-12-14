@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { TouchableOpacity, View } from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
@@ -7,13 +7,20 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Feather from 'react-native-vector-icons/Feather';
 import { useNavigation } from '@react-navigation/native';
 import { logout } from '../firebase/auth';
+import Search from './Search';
 
 const Sidebar = () => {
   const navigation = useNavigation();
+  const [openSearchModal, setOpenSearchModal] = useState(false);
+  const [openCreateModal, setOpenCreateModal] = useState(false);
 
   const handleLogout = async () => {
     navigation.navigate('Login');
     await logout();
+  };
+
+  const handleSearch = () => {
+    setOpenSearchModal(true);
   };
 
   return (
@@ -24,7 +31,9 @@ const Sidebar = () => {
       </TouchableOpacity>
 
       {/* Search Icon */}
-      <MaterialIcons name="search" size={30} color="white" />
+      <TouchableOpacity onPress={handleSearch}>
+        <MaterialIcons name="search" size={30} color="white" />
+      </TouchableOpacity>
       
       {/* Notifications Icon */}
       <Ionicons name="notifications-outline" size={30} color="white" />
@@ -41,6 +50,8 @@ const Sidebar = () => {
       <TouchableOpacity onPress={handleLogout}>
         <Feather name="log-out" size={30} color="white" />
       </TouchableOpacity>
+
+      <Search isOpen={openSearchModal} onClose={() => setOpenSearchModal(false)} />
     </View>
   );
 };
