@@ -16,6 +16,7 @@ const Login = () => {
   const handleLogin = async () => {
     const user = await login(email, password);
     if(user) {
+      console.log("Logged in user:", user);
       await AsyncStorage.setItem('user', JSON.stringify(user));
       navigation.navigate('Main');
     }

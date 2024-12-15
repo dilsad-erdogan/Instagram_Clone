@@ -5,7 +5,7 @@ import { arrayRemove, collection, doc, getDoc, getDocs, setDoc, updateDoc } from
 export const login = async (email, password) => {
   try{
     const { user } = await signInWithEmailAndPassword(auth, email, password);
-    return user;
+    return { uid: user.uid, email: user.email };
   } catch (error) {
     console.error(error);
   }
